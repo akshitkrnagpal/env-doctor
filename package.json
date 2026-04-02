@@ -1,0 +1,53 @@
+{
+  "name": "env-doctor",
+  "version": "0.1.0",
+  "description": "A .env file auditor for developers — detect unused vars, missing vars, hardcoded secrets, env drift, and more",
+  "type": "module",
+  "main": "./dist/index.mjs",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "bun": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "bin": {
+    "env-doctor": "bin/env-doctor-node.js"
+  },
+  "files": [
+    "bin/env-doctor.js",
+    "bin/env-doctor-node.js",
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bun build src/cli/index.ts --compile --outfile bin/env-doctor",
+    "build:npm": "bun build src/cli/index.ts --outfile dist/cli.mjs --target node --minify && bun build src/index.ts --outfile dist/index.mjs --target node --minify",
+    "dev": "bun run src/cli/index.ts",
+    "start": "bun run src/cli/index.ts",
+    "prepublishOnly": "bun run build:npm",
+    "typecheck": "bun x tsc --noEmit",
+    "test": "bun test"
+  },
+  "keywords": [
+    "env",
+    "dotenv",
+    "audit",
+    "cli",
+    "secrets",
+    "lint"
+  ],
+  "author": "akshitkrnagpal",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "ora": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3"
+  }
+}

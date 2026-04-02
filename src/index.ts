@@ -1,0 +1,8 @@
+export { parseEnvFile, type EnvEntry } from "./core/env-parser.js";
+export { findUnusedVars } from "./core/unused.js";
+export { findMissingVars } from "./core/missing.js";
+export { detectSecrets } from "./core/secrets.js";
+export { detectDrift } from "./core/drift.js";
+export { validateEnvFormat } from "./core/validate.js";
+export { syncEnvExample } from "./core/sync.js";
+export { generateEnvExample } from "./core/init.js";

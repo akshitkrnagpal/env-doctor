@@ -1,0 +1,8 @@
+dist/
+node_modules
+
+# Compiled binaries (built during release)
+bin/env-doctor
+bin/env-doctor-linux-*
+bin/env-doctor-darwin-*
+bin/env-doctor-windows-*
