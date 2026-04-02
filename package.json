@@ -1,6 +1,6 @@
 {
   "name": "@akshitkrnagpal/env-doctor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A .env file auditor for developers — detect unused vars, missing vars, hardcoded secrets, env drift, and more",
   "type": "module",
   "main": "./dist/index.mjs",
