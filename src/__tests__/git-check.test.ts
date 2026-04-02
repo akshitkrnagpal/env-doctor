@@ -31,7 +31,7 @@ describe("checkGitSafety", () => {
   test("detects when .env is in .gitignore", async () => {
     const dir = await mkdtemp(join(tmpdir(), "env-doctor-gitignore-"));
     try {
-      execSync("git init", { cwd: dir, stdio: "pipe" });
+      execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', { cwd: dir, stdio: "pipe" });
       await writeFile(join(dir, ".gitignore"), ".env\nnode_modules\n");
       execSync("git add .gitignore", { cwd: dir, stdio: "pipe" });
       execSync('git commit -m "init"', { cwd: dir, stdio: "pipe" });
@@ -47,7 +47,7 @@ describe("checkGitSafety", () => {
   test("detects when .env is NOT in .gitignore", async () => {
     const dir = await mkdtemp(join(tmpdir(), "env-doctor-nogitignore-"));
     try {
-      execSync("git init", { cwd: dir, stdio: "pipe" });
+      execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', { cwd: dir, stdio: "pipe" });
       await writeFile(join(dir, ".gitignore"), "node_modules\n");
       execSync("git add .gitignore", { cwd: dir, stdio: "pipe" });
       execSync('git commit -m "init"', { cwd: dir, stdio: "pipe" });
@@ -62,7 +62,7 @@ describe("checkGitSafety", () => {
   test("detects tracked .env files", async () => {
     const dir = await mkdtemp(join(tmpdir(), "env-doctor-tracked-"));
     try {
-      execSync("git init", { cwd: dir, stdio: "pipe" });
+      execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', { cwd: dir, stdio: "pipe" });
       await writeFile(join(dir, ".env"), "SECRET=abc123\n");
       execSync("git add .env", { cwd: dir, stdio: "pipe" });
       execSync('git commit -m "oops"', { cwd: dir, stdio: "pipe" });
@@ -77,7 +77,7 @@ describe("checkGitSafety", () => {
   test("detects .env.example tracking status", async () => {
     const dir = await mkdtemp(join(tmpdir(), "env-doctor-example-"));
     try {
-      execSync("git init", { cwd: dir, stdio: "pipe" });
+      execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', { cwd: dir, stdio: "pipe" });
       await writeFile(join(dir, ".env.example"), "API_KEY=\n");
       execSync("git add .env.example", { cwd: dir, stdio: "pipe" });
       execSync('git commit -m "add example"', { cwd: dir, stdio: "pipe" });
@@ -92,7 +92,7 @@ describe("checkGitSafety", () => {
   test("detects .env files in git history", async () => {
     const dir = await mkdtemp(join(tmpdir(), "env-doctor-history-"));
     try {
-      execSync("git init", { cwd: dir, stdio: "pipe" });
+      execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', { cwd: dir, stdio: "pipe" });
       await writeFile(join(dir, ".env"), "SECRET=leak\n");
       execSync("git add .env", { cwd: dir, stdio: "pipe" });
       execSync('git commit -m "accidental commit"', {
@@ -111,7 +111,7 @@ describe("checkGitSafety", () => {
   test("excludes .env.example from tracked file warnings", async () => {
     const dir = await mkdtemp(join(tmpdir(), "env-doctor-exclude-example-"));
     try {
-      execSync("git init", { cwd: dir, stdio: "pipe" });
+      execSync('git init && git config user.email "test@test.com" && git config user.name "Test"', { cwd: dir, stdio: "pipe" });
       await writeFile(join(dir, ".env.example"), "API_KEY=\n");
       execSync("git add .env.example", { cwd: dir, stdio: "pipe" });
       execSync('git commit -m "add example"', { cwd: dir, stdio: "pipe" });
