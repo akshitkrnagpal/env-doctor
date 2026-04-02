@@ -10,6 +10,9 @@ import { registerSyncCommand } from "./commands/sync.js";
 import { registerInitCommand } from "./commands/init.js";
 import { registerFixCommand } from "./commands/fix.js";
 import { registerCompletionCommand } from "./commands/completion.js";
+import { registerGitCheckCommand } from "./commands/git-check.js";
+import { registerDiffCommand } from "./commands/diff.js";
+import { registerReportCommand } from "./commands/report.js";
 import { loadConfig } from "../core/config.js";
 
 async function main() {
@@ -37,6 +40,9 @@ async function main() {
   registerInitCommand(program);
   registerFixCommand(program);
   registerCompletionCommand(program);
+  registerGitCheckCommand(program);
+  registerDiffCommand(program);
+  registerReportCommand(program);
 
   // Load config before parsing so defaults can be applied
   const dir = extractDirFromArgs(process.argv);

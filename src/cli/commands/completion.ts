@@ -7,7 +7,7 @@ export function registerCompletionCommand(program: Command): void {
     .argument("<shell>", "Shell type: bash, zsh, or fish")
     .action((shell: string) => {
       const commands =
-        "check unused missing drift secrets validate sync init fix completion";
+        "check unused missing drift secrets validate sync init fix completion git-check diff report";
       const globalFlags =
         "--verbose --quiet --no-color --json --dir --env-file --ignore --help --version";
 
@@ -29,6 +29,12 @@ _env_doctor_completions() {
         ;;
       drift)
         COMPREPLY=( $(compgen -f -- "\${cur}") )
+        ;;
+      diff)
+        COMPREPLY=( $(compgen -f -- "\${cur}") )
+        ;;
+      report)
+        COMPREPLY=( $(compgen -W "--output" -- "\${cur}") )
         ;;
       *)
         COMPREPLY=( $(compgen -W "\${global_flags}" -- "\${cur}") )
@@ -54,6 +60,9 @@ _env_doctor() {
     'init:Generate .env.example from .env'
     'fix:Auto-fix common .env issues'
     'completion:Generate shell completions'
+    'git-check:Check git safety for .env files'
+    'diff:Show diff between two .env files'
+    'report:Generate audit report'
   )
 
   _arguments -C \\
@@ -100,6 +109,9 @@ complete -c env-doctor -n '__fish_use_subcommand' -a 'sync' -d 'Check .env again
 complete -c env-doctor -n '__fish_use_subcommand' -a 'init' -d 'Generate .env.example from .env'
 complete -c env-doctor -n '__fish_use_subcommand' -a 'fix' -d 'Auto-fix common .env issues'
 complete -c env-doctor -n '__fish_use_subcommand' -a 'completion' -d 'Generate shell completions'
+complete -c env-doctor -n '__fish_use_subcommand' -a 'git-check' -d 'Check git safety for .env files'
+complete -c env-doctor -n '__fish_use_subcommand' -a 'diff' -d 'Show diff between two .env files'
+complete -c env-doctor -n '__fish_use_subcommand' -a 'report' -d 'Generate audit report'
 complete -c env-doctor -s v -l verbose -d 'Verbose output'
 complete -c env-doctor -s q -l quiet -d 'Quiet mode'
 complete -c env-doctor -l json -d 'JSON output'

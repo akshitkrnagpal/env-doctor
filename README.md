@@ -16,6 +16,9 @@ A `.env` file auditor for developers. Detect unused variables, missing variables
 - **Example sync** -- Ensure `.env` has all variables from `.env.example`
 - **Init** -- Generate `.env.example` from an existing `.env` (values stripped)
 - **Auto-fix** -- Remove duplicates, sort keys, add missing vars from `.env.example`
+- **Git safety** -- Check if `.env` is gitignored, tracked, or leaked in git history
+- **Env diff** -- Detailed colored diff between two `.env` files showing added, removed, and changed values
+- **Audit report** -- Generate a markdown report with pass/fail summaries across all checks
 - **Config file** -- Load settings from `.envdoctorrc.json` or `package.json`
 - **Shell completions** -- Bash, Zsh, and Fish completion scripts
 
@@ -62,6 +65,9 @@ env-doctor validate        # Validate .env file format
 env-doctor sync            # Check .env against .env.example
 env-doctor init            # Create .env.example from .env
 env-doctor fix             # Auto-fix common issues
+env-doctor git-check       # Check git safety for .env files
+env-doctor diff <a> <b>    # Detailed diff between two .env files
+env-doctor report          # Generate markdown audit report
 env-doctor completion      # Generate shell completions
 ```
 
@@ -98,6 +104,65 @@ The fix command:
 - **Removes duplicate keys** -- keeps the last occurrence
 - **Sorts keys alphabetically** -- for consistent ordering
 - **Adds missing variables** -- from `.env.example` with placeholder values
+
+### Git check command
+
+Check git safety for `.env` files:
+
+```bash
+# Run standalone
+env-doctor git-check
+
+# Also included in the default check command
+env-doctor check
+```
+
+The git-check command:
+- **Checks `.gitignore`** -- warns if `.env` is not listed in `.gitignore`
+- **Checks tracked files** -- warns if any `.env` files are tracked by git
+- **Checks `.env.example`** -- suggests adding `.env.example` to git if missing
+- **Scans git history** -- detects accidentally committed `.env` files
+
+### Diff command
+
+Show a detailed diff between two `.env` files:
+
+```bash
+# Compare two env files
+env-doctor diff .env.development .env.production
+
+# Show unchanged keys too
+env-doctor diff .env.local .env.staging --verbose
+
+# JSON output
+env-doctor diff .env .env.example --json
+```
+
+The diff shows:
+- **Added keys** in green
+- **Removed keys** in red
+- **Changed values** in yellow with old and new values
+- **Unchanged keys** in gray (only with `--verbose`)
+
+### Report command
+
+Generate a markdown audit report:
+
+```bash
+# Print report to stdout
+env-doctor report
+
+# Write report to a file
+env-doctor report --output audit-report.md
+
+# JSON output
+env-doctor report --json
+```
+
+The report includes:
+- Summary with pass/fail/skip counts
+- Sections for format validation, unused/missing variables, secrets, drift, sync, and git safety
+- Timestamp and project path
 
 ### Shell completions
 

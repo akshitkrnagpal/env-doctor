@@ -8,3 +8,6 @@ export { syncEnvExample } from "./core/sync.js";
 export { generateEnvExample } from "./core/init.js";
 export { fixEnvFile } from "./core/fix.js";
 export { loadConfig, type EnvDoctorConfig } from "./core/config.js";
+export { checkGitSafety, type GitCheckResult, type GitHistoryLeak } from "./core/git-check.js";
+export { diffEnvFiles, diffEnvContents, type DiffEntry, type DiffResult } from "./core/diff.js";
+export { generateReport, formatReportMarkdown, type ReportResult, type ReportSection } from "./core/report.js";

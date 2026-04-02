@@ -9,6 +9,7 @@ import { detectSecrets } from "../../core/secrets.js";
 import { detectDrift } from "../../core/drift.js";
 import { validateEnvFormat } from "../../core/validate.js";
 import { syncEnvExample } from "../../core/sync.js";
+import { checkGitSafety } from "../../core/git-check.js";
 import { getGlobalOpts } from "./helpers.js";
 import {
   formatHeader,
@@ -82,6 +83,18 @@ export function registerCheckCommand(program: Command): void {
           );
           results.sync = syncResult;
           if (syncResult.missing.length > 0) hasIssues = true;
+        }
+
+        // Git safety check
+        const gitResult = await checkGitSafety(globals.dir);
+        results.gitSafety = gitResult;
+        if (
+          gitResult.isGitRepo &&
+          (!gitResult.envInGitignore ||
+            gitResult.trackedEnvFiles.length > 0 ||
+            gitResult.historyLeaks.length > 0)
+        ) {
+          hasIssues = true;
         }
 
         printJsonOutput(results);
@@ -279,6 +292,53 @@ export function registerCheckCommand(program: Command): void {
             console.log(
               formatSuccess("In sync with .env.example"),
             );
+          }
+        } catch {
+          spinner?.stop();
+        }
+      }
+
+      // 7. Git safety check
+      {
+        const spinner = globals.quiet ? null : ora("Checking git safety...").start();
+        try {
+          const result = await checkGitSafety(globals.dir);
+          spinner?.stop();
+
+          if (result.isGitRepo) {
+            let gitIssues = false;
+
+            if (!result.envInGitignore) {
+              gitIssues = true;
+              hasIssues = true;
+              console.log(formatWarning(".env is NOT in .gitignore"));
+            } else if (!globals.quiet) {
+              console.log(formatSuccess(".env is in .gitignore"));
+            }
+
+            if (result.trackedEnvFiles.length > 0) {
+              gitIssues = true;
+              hasIssues = true;
+              console.log(
+                formatError(
+                  `${result.trackedEnvFiles.length} .env file(s) tracked by git`,
+                ),
+              );
+            }
+
+            if (result.historyLeaks.length > 0) {
+              gitIssues = true;
+              hasIssues = true;
+              console.log(
+                formatWarning(
+                  `${result.historyLeaks.length} .env file(s) found in git history`,
+                ),
+              );
+            }
+
+            if (!gitIssues && !globals.quiet) {
+              console.log(formatSuccess("Git safety checks passed"));
+            }
           }
         } catch {
           spinner?.stop();
