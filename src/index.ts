@@ -6,3 +6,5 @@ export { detectDrift } from "./core/drift.js";
 export { validateEnvFormat } from "./core/validate.js";
 export { syncEnvExample } from "./core/sync.js";
 export { generateEnvExample } from "./core/init.js";
+export { fixEnvFile } from "./core/fix.js";
+export { loadConfig, type EnvDoctorConfig } from "./core/config.js";
