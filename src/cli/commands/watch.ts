@@ -80,10 +80,10 @@ export function registerWatchCommand(program: Command) {
           }
 
           if (checks.includes("secrets")) {
-            const result = await detectSecrets(dir, ignore);
-            if (result.matches.length > 0) {
-              console.log(chalk.yellow(`  Secrets: ${result.matches.length} found`));
-              issues += result.matches.length;
+            const result = await detectSecrets(scanOpts);
+            if (result.secrets.length > 0) {
+              console.log(chalk.yellow(`  Secrets: ${result.secrets.length} found`));
+              issues += result.secrets.length;
             } else {
               console.log(chalk.green("  Secrets: none"));
             }
