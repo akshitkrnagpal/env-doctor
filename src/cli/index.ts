@@ -13,6 +13,7 @@ import { registerCompletionCommand } from "./commands/completion.js";
 import { registerGitCheckCommand } from "./commands/git-check.js";
 import { registerDiffCommand } from "./commands/diff.js";
 import { registerReportCommand } from "./commands/report.js";
+import { registerWatchCommand } from "./commands/watch.js";
 import { loadConfig } from "../core/config.js";
 
 async function main() {
@@ -43,6 +44,7 @@ async function main() {
   registerGitCheckCommand(program);
   registerDiffCommand(program);
   registerReportCommand(program);
+  registerWatchCommand(program);
 
   // Load config before parsing so defaults can be applied
   const dir = extractDirFromArgs(process.argv);
