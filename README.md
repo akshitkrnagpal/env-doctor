@@ -1,7 +1,7 @@
 # env-doctor
 
 [![CI](https://github.com/akshitkrnagpal/env-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/akshitkrnagpal/env-doctor/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/env-doctor.svg)](https://www.npmjs.com/package/env-doctor)
+[![npm version](https://img.shields.io/npm/v/@akshitkrnagpal/env-doctor.svg)](https://www.npmjs.com/package/@akshitkrnagpal/env-doctor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A `.env` file auditor for developers. Detect unused variables, missing variables, hardcoded secrets, environment drift, and more across your entire codebase or monorepo.
@@ -35,15 +35,14 @@ env-doctor scans for environment variable usage across multiple languages:
 ## Installation
 
 ```bash
-# Using bun (recommended)
-bun add -g env-doctor
-
 # Using npm
-npm install -g env-doctor
+npm install -g @akshitkrnagpal/env-doctor
 
 # Run without installing
-bunx env-doctor
-npx env-doctor
+npx @akshitkrnagpal/env-doctor
+
+# Using bun
+bunx @akshitkrnagpal/env-doctor
 ```
 
 ## Usage
@@ -195,7 +194,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - run: bunx env-doctor --json
+      - run: bunx @akshitkrnagpal/env-doctor --json
 ```
 
 ## Development
